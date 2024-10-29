@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- FOnts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- favicon -->
+    <link
+      rel="apple-touch-icon"
+      sizes="57x57"
+      href="./assets/favicon/apple-icon-57x57.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href="./assets/favicon/apple-icon-60x60.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="./assets/favicon/apple-icon-72x72.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="./assets/favicon/apple-icon-76x76.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="./assets/favicon/apple-icon-114x114.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="./assets/favicon/apple-icon-120x120.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="./assets/favicon/apple-icon-144x144.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="./assets/favicon/apple-icon-152x152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./assets/favicon/apple-icon-180x180.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="./assets/favicon/android-icon-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="./assets/favicon/favicon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./assets/favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="./assets/favicon/manifest.json" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+    <meta name="theme-color" content="#ffffff" />
+    <!-- css -->
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/reset.css" />
+    <title>RiuBarber- Đặt Lịch</title>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="header-top fixed">
+          <!-- logo -->
+
+          <a href="./index.html">
+            <div class="box__logo">
+              <div class="logo__link">
+                <img
+                  src="./assets/favicon/android-icon-72x72.png"
+                  alt="RiuBarber"
+                  class="logo"
+                />
+              </div>
+              <div class="logo__name"><h1>RIU</h1></div>
+            </div>
+          </a>
+
+          <!-- nav -->
+          <nav class="navbar">
+            <ul class="navbar__list">
+              <li class="navbar__item">
+                <a href="./index.html" class="navbar__link">Trang Chủ</a>
+              </li>
+              <li class="navbar__item">
+                <a href="" class="navbar__link">Giới thiệu</a>
+              </li>
+              <li class="navbar__item">
+                <a
+                  href="./datlich.html"
+                  class="navbar__link navbar__link--active"
+                  >Đặt lịch</a
+                >
+              </li>
+              <li class="navbar__item">
+                <a href="" class="navbar__link">Liên hệ</a>
+              </li>
+            </ul>
+          </nav>
+          <div class="action">
+            <a href="./signup.html" class="action__btn">Đăng Kí</a>
+            <a href="./login.html" class="action__btn btn">Đăng Nhập</a>
+          </div>
+        </div>
+        <!-- Booking -->
+        <div class="booking">
+          <form action="" class="booking__form">
+            <h1 class="booking__heading">Đặt lịch ngay</h1>
+            <div class="booking__group">
+              <input
+                type="text"
+                class="booking__group-input"
+                placeholder="Họ và tên"
+              />
+            </div>
+            <div class="booking__group">
+              <input
+                type="text"
+                class="booking__group-input"
+                placeholder="Số Điện Thoại"
+              />
+            </div>
+            <div class="booking__group">
+              <input
+                type="time"
+                class="booking__group-input"
+                placeholder="Giờ"
+              />
+            </div>
+            <div class="booking__group">
+              <input
+                type="date"
+                class="booking__group-input"
+                placeholder="Số Điện Thoại"
+              />
+            </div>
+            <input type="submit" class="booking__submit" value="Đặt ngay" />
+          </form>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section class="appointment">
+        <div class="container">
+          <div class="appointment__inner">
+            <h2 class="section-heading appointment__heading">Ưu đãi</h2>
+            <p class="section-desc appointment__desc">
+              Nhận ngay ưu đãi 30% cho lần cắt tóc đầu tiên tại Riu Barber. Liên
+              hệ số hotline 031-111-1111 để biết thêm thông tin chi tiết.
+            </p>
+            <a href="./datlich.html" class="btn appointment__btn">Đặt lịch</a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <section class="footer">
+      <div class="container">
+        <div class="footer__top">
+          <!-- column1 -->
+          <div class="footer__column">
+            <a href="./index.html">
+              <div class="box__logo">
+                <div class="logo__link">
+                  <img
+                    src="./assets/favicon/android-icon-72x72.png"
+                    alt="RiuBarber"
+                    class="logo"
+                  />
+                </div>
+                <div class="logo__name"><h1>RIU</h1></div>
+              </div>
+            </a>
+            <p class="footer__desc footer__desc-logo">
+              Nơi thay đổi diện mạo ,cải lão hoàn đồng.
+            </p>
+          </div>
+          <!-- column2 -->
+          <div class="footer__column">
+            <h3 class="footer__heading">Sản phẩm của</h3>
+            <ul class="footer__list">
+              <li class="footer__item">
+                <p class="footer__desc">Hàng Hồ Nam</p>
+              </li>
+              <li class="footer__item">
+                <p class="footer__desc">Huỳnh Hoa Luân</p>
+              </li>
+            </ul>
+          </div>
+          <!-- column3 -->
+          <div class="footer__column">
+            <h3 class="footer__heading">Social</h3>
+            <div class="footer__social">
+              <a
+                href="https://vi-vn.facebook.com/"
+                class="footer__social-btn"
+                target="_blank"
+                ><img
+                  class="footer__icon"
+                  src="./assets/img/2023_Facebook_icon.svg"
+                  alt="Facebook"
+              /></a>
+              <a
+                href="https://youtube.com/"
+                class="footer__social-btn"
+                target="_blank"
+                ><img
+                  class="footer__icon footer__icon-fix"
+                  src="./assets/img/vecteezy_youtube-logo-icon-symbol-editorial-vector-illustration_10486739.svg"
+                  alt="Youtube"
+                />
+              </a>
+              <a href="#!" class="footer__social-btn" target="_blank"
+                ><img
+                  class="footer__icon"
+                  src="./assets/img/vecteezy_location-black-and-white-vector-icon_26813125.svg"
+                  alt="location"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="footer__copyright">
+          <p class="footer__copyright-text">
+            2024 GDN. Copyright and All rights reserved.
+          </p>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
