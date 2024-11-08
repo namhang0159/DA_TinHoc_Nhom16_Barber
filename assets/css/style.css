@@ -89,6 +89,7 @@ a {
 .navbar__list {
   display: flex;
 }
+
 .action__btn,
 .navbar__link {
   color: black;
@@ -432,4 +433,30 @@ a {
 .login__desc,
 .signup__desc {
   margin-top: 15px;
+}
+/* ===========trangcanhan============== */
+
+.info__group {
+  width: 300px;
+  height: 300px;
+  justify-content: center;
+  box-shadow: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 24px;
+  margin-left: 40%;
+  margin-top: 30px;
+}
+
+/* ===============intro=============== */
+.intro {
+  margin-top: 30px;
+  text-align: center;
+}
+.intro .appointment-desc {
+  margin-top: 20px;
+  font-size: 19px;
+}
+/* ===========contact============== */
+.contact {
+  margin-top: 20px;
 }
