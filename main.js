@@ -8,6 +8,11 @@ const usernameElement = document.getElementById("usernamett");
 const emailElement = document.getElementById("emailtt");
 const usernameboxE = document.getElementById("usernamebox");
 
+const userLogin = getUserLogin();
+if (userLogin) {
+  loginElement.style.display = "none";
+  signupElement.style.display = "none";
+}
 function updateUI() {
   const userLogin = getUserLogin();
   if (userLogin && userLogin.username) {
@@ -34,7 +39,7 @@ function updateUI() {
 }
 
 function logout() {
-  window.location.href("index");
+  window.location.href = "index.html"; // Chuyển hướng đến trang chủ (hoặc trang đăng nhập)
   localStorage.removeItem("userLogin");
   updateUI(); // Cập nhật lại giao diện sau khi xóa thông tin người dùng
 }
