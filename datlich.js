@@ -9,31 +9,47 @@ if (userLogin) {
   loginElement.style.display = "none";
   signupElement.style.display = "none";
 }
+
 bookingF.addEventListener("submit", function (event) {
   event.preventDefault(); // Ngăn form gửi dữ liệu
-  const userLogin = getUserLogin();
+
+  // Lấy dữ liệu từ form
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const time = document.getElementById("time").value;
+  const date = document.getElementById("date").value;
+
+  // Kiểm tra thông tin
+  if (!name || !phone || !time || !date) {
+    alert("Vui lòng điền đầy đủ thông tin!");
+    return;
+  }
+
   if (userLogin) {
     loginElement.style.display = "none";
     signupElement.style.display = "none";
-    // Lấy dữ liệu từ form
-    const name = document.getElementById("name").value;
-    const phone = document.getElementById("phone").value;
-    const time = document.getElementById("time").value;
-    const date = document.getElementById("date").value;
-
-    // Tạo đối tượng dữ liệu
-    const bookingData = {
-      name: name,
-      phone: phone,
-      time: time,
-      date: date,
-    };
-
-    // Lưu vào Local Storage
-    localStorage.setItem("bookingData", JSON.stringify(bookingData));
-
-    alert("Đặt lịch thành công");
+    // Gửi dữ liệu tới server qua fetch
+    const bookingData = { name, phone, time, date };
+    fetch("./db/connect/php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(bookingData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "success") {
+          alert(data.message);
+          // Xóa dữ liệu đã nhập trong form
+          bookingF.reset();
+        } else {
+          alert("Lỗi khi đặt lịch: " + data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Lỗi:", error);
+        alert("Có lỗi xảy ra, vui lòng thử lại sau.");
+      });
   } else {
-    alert("Cần đăng nhập!");
+    alert("Bạn cần đăng nhập trước khi đặt lịch!");
   }
 });

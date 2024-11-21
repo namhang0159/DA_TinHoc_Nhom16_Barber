@@ -1,0 +1,10 @@
+# Bật RewriteEngine
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+</IfModule>
+
+# Cho phép các phương thức POST, GET
+<Limit POST GET>
+    Order Allow,Deny
+    Allow from all
+</Limit>

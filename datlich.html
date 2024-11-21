@@ -140,11 +140,17 @@
         </div>
         <!-- Booking -->
         <div class="booking">
-          <form action="" class="booking__form" id="bookingForm">
+          <form
+            class="booking__form"
+            id="bookingForm"
+            action="./db/connect.php"
+            method="post"
+          >
             <h1 class="booking__heading">Đặt lịch ngay</h1>
             <div class="booking__group">
               <input
                 type="text"
+                name="name"
                 id="name"
                 class="booking__group-input"
                 placeholder="Họ và tên"
@@ -153,6 +159,7 @@
             <div class="booking__group">
               <input
                 type="text"
+                name="phone"
                 id="phone"
                 class="booking__group-input"
                 placeholder="Số Điện Thoại"
@@ -161,6 +168,7 @@
             <div class="booking__group">
               <input
                 type="time"
+                name="time"
                 id="time"
                 class="booking__group-input"
                 placeholder="Giờ"
@@ -169,6 +177,7 @@
             <div class="booking__group">
               <input
                 type="date"
+                name="date"
                 id="date"
                 class="booking__group-input"
                 placeholder="Số Điện Thoại"
