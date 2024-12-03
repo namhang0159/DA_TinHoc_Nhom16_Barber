@@ -143,7 +143,7 @@
           <form
             class="booking__form"
             id="bookingForm"
-            action="./db/connect.php"
+            action="http://localhost:3000/submit-booking"
             method="post"
           >
             <h1 class="booking__heading">Đặt lịch ngay</h1>
@@ -183,7 +183,12 @@
                 placeholder="Số Điện Thoại"
               />
             </div>
-            <input type="submit" class="booking__submit" value="Đặt ngay" />
+            <input
+              type="submit"
+              class="booking__submit"
+              name="btn-booking"
+              value="Đặt ngay"
+            />
           </form>
         </div>
       </div>
@@ -275,7 +280,29 @@
         </div>
       </div>
     </section>
+    <script>
+      const form = document.getElementById("bookingForm");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-    <script src="./datlich.js"></script>
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+          const response = await fetch("http://localhost:3000/submit-booking", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          });
+
+          const result = await response.text();
+          alert(result); // Thông báo kết quả
+        } catch (err) {
+          console.error("Lỗi khi gửi yêu cầu:", err);
+          alert("Đặt lịch thất bại, vui lòng thử lại!");
+        }
+      });
+    </script>
+    <!-- <script src="./datlich.js"></script> -->
   </body>
 </html>
