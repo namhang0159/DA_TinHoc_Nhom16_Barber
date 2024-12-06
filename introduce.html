@@ -110,7 +110,7 @@
 
           <!-- nav -->
           <nav class="navbar">
-            <ul class="navbar__list">
+            <ul class="navbar__list" id="navbar__list--pc">
               <li class="navbar__item">
                 <a href="./index.html" class="navbar__link">Trang Chủ</a>
               </li>
@@ -145,7 +145,65 @@
             Tại Riu Barber, chúng tôi tin rằng mỗi người đàn ông đều xứng đáng với dịch vụ tốt nhất. Không gian của tiệm được thiết kế ấm cúng, sang trọng nhưng không kém phần thoải mái, tạo cảm giác thư giãn và dễ chịu. Đến với Riu Barber, khách hàng không chỉ trải nghiệm dịch vụ mà còn tận hưởng không gian kết nối và chia sẻ phong cách sống.</p>
       </div>
     </header>
-
+    <!-- mobile/tablet -->
+    <div class="mobile-header">
+      <!-- menu -->
+      <input
+        type="checkbox"
+        name="menu-checkbox"
+        id="menu-checkbox"
+        class="menu-checkbox"
+        hidden
+      />
+      <label for="menu-checkbox">
+        <svg
+          class="menu-header__icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 448 512"
+        >
+          <!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+          <path
+            fill="#FFF"
+            d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z"
+          />
+        </svg>
+      </label>
+      <label for="menu-checkbox" class="menu-overlay"> </label>
+      <!-- content -->
+      <div class="menu-drawer">
+        <!-- logo -->
+        <a href="./index.html">
+          <div class="box__logo">
+            <div class="logo__link">
+              <img
+                src="./assets/favicon/android-icon-72x72.png"
+                alt="RiuBarber"
+                class="logo"
+              />
+            </div>
+            <div class="logo__name"><h1>RIU</h1></div>
+          </div>
+        </a>
+        <!-- nav cho mobile -->
+        <ul class="navbar__list" id="navbar__list--mobile"></ul>
+        <script>
+          const navPC = document.querySelector("#navbar__list--pc");
+          const navMobile = document.querySelector("#navbar__list--mobile");
+          navMobile.innerHTML = navPC.innerHTML;
+        </script>
+        <!-- ngan cách -->
+        <div class="separate"></div>
+        <!-- cta action -->
+        <div class="showonmobile">
+          <li class="navbar__item">
+            <a href="./signup.html" class="navbar__link">Đăng ký</a>
+          </li>
+          <li class="navbar__item">
+            <a href="./login.html" class="navbar__link">Đăng nhập</a>
+          </li>
+        </div>
+      </div>
+    </div>
     <section class="footer">
       <div class="container">
         <div class="footer__top">
@@ -219,6 +277,12 @@
         </div>
       </div>
     </section>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-F4o/jemlfEq3kGqI9YSV5UKF0FRVqREn3jQ7klDd1K/uNSKfhX1jyWWLq9nKppc9"
+      crossorigin="anonymous"
+    ></script>
     <script src="./main.js"></script>
+
   </body>
 </html>
