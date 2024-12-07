@@ -46,5 +46,45 @@ app.post("/submit-booking", (req, res) => {
   });
 });
 
+app.post("/signup", (req, res) => {
+  const { username, email, password } = req.body;
+
+  if (!username || !email || !password) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Thiếu thông tin!" });
+  }
+
+  // Kiểm tra xem username hoặc email đã tồn tại hay chưa
+  const checkUserQuery = "SELECT * FROM users WHERE username = ? OR email = ?";
+  db.query(checkUserQuery, [username, email], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res
+        .status(500)
+        .json({ success: false, message: "Lỗi kiểm tra tài khoản." });
+    }
+
+    if (results.length > 0) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Tài khoản hoặc email đã tồn tại!" });
+    }
+
+    // Nếu không tồn tại, tiến hành lưu vào database
+    const query =
+      "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+    db.query(query, [username, email, password], (err, result) => {
+      if (err) {
+        console.error(err);
+        return res
+          .status(500)
+          .json({ success: false, message: "Lỗi khi lưu dữ liệu." });
+      }
+      res.status(200).json({ success: true, message: "Đăng ký thành công!" });
+    });
+  });
+});
+
 const PORT = 3000;
 app.listen(PORT, () => console.log(`Server chạy tại http://localhost:${PORT}`));
