@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="./assets/favicon/apple-icon-120x120.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="./assets/favicon/apple-icon-144x144.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="./assets/favicon/apple-icon-152x152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./assets/favicon/apple-icon-180x180.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="./assets/favicon/android-icon-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="./assets/favicon/favicon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./assets/favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="./assets/favicon/manifest.json" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+    <meta name="theme-color" content="#ffffff" />
+    <!-- css -->
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/reset.css" />
+    <title>Đăng Ký</title>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="header-top fixed">
+          <!-- logo -->
+
+          <a href="./index.html">
+            <div class="box__logo">
+              <div class="logo__link">
+                <img
+                  src="./assets/favicon/android-icon-72x72.png"
+                  alt="RiuBarber"
+                  class="logo"
+                />
+              </div>
+              <div class="logo__name"><h1>RIU</h1></div>
+            </div>
+          </a>
+
+          <!-- nav -->
+          <nav class="navbar">
+            <ul class="navbar__list" id="navbar__list--pc">
+              <li class="navbar__item">
+                <a href="./index.html" class="navbar__link navbar__link--active"
+                  >Trang Chủ</a
+                >
+              </li>
+              <li class="navbar__item">
+                <a href="" class="navbar__link">Giới thiệu</a>
+              </li>
+              <li class="navbar__item">
+                <a href="./datlich.html" class="navbar__link">Đặt lịch</a>
+              </li>
+              <li class="navbar__item">
+                <a href="" class="navbar__link">Liên hệ</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <div class="signup">
+        <form class="signup__form" id="signup-form" method="POST" action="">
+          <h2 class="signup__heading">Đăng ký tài khoản</h2>
+
+          <div class="signup__group">
+            <input
+              class="signup__form-input"
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Tên người dùng"
+              required
+            />
+            <div id="usernameError" style="color: red; display: none">
+              Không được để trống
+            </div>
+          </div>
+          <div class="signup__group">
+            <input
+              class="signup__form-input"
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email"
+              required
+            />
+            <div id="emailError" style="color: red; display: none">
+              Không được để trống
+            </div>
+          </div>
+
+          <div class="signup__group">
+            <input
+              class="signup__form-input"
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Mật khẩu"
+              required
+            />
+            <div id="passwordError" style="color: red; display: none">
+              Không được để trống
+            </div>
+          </div>
+
+          <div class="signup__group">
+            <input
+              class="signup__form-input"
+              type="password"
+              id="confirm-password"
+              name="confirm_password"
+              required
+              placeholder="Xác nhận mật khẩu"
+            />
+            <div
+              id="confirmpasswordError"
+              style="color: red; display: none; margin: 10px 0px"
+            >
+              Không được để trống
+            </div>
+          </div>
+
+          <button type="submit" class="signup__submit">Đăng ký</button>
+
+          <p class="signup__desc">
+            Đã có tài khoản? <a href="./login.html">Đăng nhập</a>
+          </p>
+        </form>
+      </div>
+    </header>
+    <!-- mobile/tablet -->
+    <div class="mobile-header">
+      <!-- menu -->
+      <input
+        type="checkbox"
+        name="menu-checkbox"
+        id="menu-checkbox"
+        class="menu-checkbox"
+        hidden
+      />
+      <label for="menu-checkbox">
+        <svg
+          class="menu-header__icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 448 512"
+        >
+          <!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+          <path
+            fill="#FFF"
+            d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z"
+          />
+        </svg>
+      </label>
+      <label for="menu-checkbox" class="menu-overlay"> </label>
+      <!-- content -->
+      <div class="menu-drawer">
+        <!-- logo -->
+        <a href="./index.html">
+          <div class="box__logo">
+            <div class="logo__link">
+              <img
+                src="./assets/favicon/android-icon-72x72.png"
+                alt="RiuBarber"
+                class="logo"
+              />
+            </div>
+            <div class="logo__name"><h1>RIU</h1></div>
+          </div>
+        </a>
+        <!-- nav cho mobile -->
+        <ul class="navbar__list" id="navbar__list--mobile"></ul>
+        <script>
+          const navPC = document.querySelector("#navbar__list--pc");
+          const navMobile = document.querySelector("#navbar__list--mobile");
+          navMobile.innerHTML = navPC.innerHTML;
+        </script>
+        <!-- ngan cách -->
+        <div class="separate"></div>
+        <!-- cta action -->
+        <div class="showonmobile">
+          <li class="navbar__item">
+            <a href="./signup.html" class="navbar__link">Đăng ký</a>
+          </li>
+          <li class="navbar__item">
+            <a href="./login.html" class="navbar__link">Đăng nhập</a>
+          </li>
+        </div>
+      </div>
+    </div>
+    <section class="footer">
+      <div class="container">
+        <div class="footer__top">
+          <!-- column1 -->
+          <div class="footer__column">
+            <a href="./index.html">
+              <div class="box__logo">
+                <div class="logo__link">
+                  <img
+                    src="./assets/favicon/android-icon-72x72.png"
+                    alt="RiuBarber"
+                    class="logo"
+                  />
+                </div>
+                <div class="logo__name"><h1>RIU</h1></div>
+              </div>
+            </a>
+            <p class="footer__desc footer__desc-logo">
+              Nơi thay đổi diện mạo ,cải lão hoàn đồng.
+            </p>
+          </div>
+          <!-- column2 -->
+          <div class="footer__column">
+            <h3 class="footer__heading">Sản phẩm của</h3>
+            <ul class="footer__list">
+              <li class="footer__item">
+                <p class="footer__desc">Hàng Hồ Nam</p>
+              </li>
+              <li class="footer__item">
+                <p class="footer__desc">Huỳnh Hoa Luân</p>
+              </li>
+            </ul>
+          </div>
+          <!-- column3 -->
+          <div class="footer__column">
+            <h3 class="footer__heading">Social</h3>
+            <div class="footer__social">
+              <a
+                href="https://vi-vn.facebook.com/"
+                class="footer__social-btn"
+                target="_blank"
+                ><img
+                  class="footer__icon"
+                  src="./assets/img/2023_Facebook_icon.svg"
+                  alt="Facebook"
+              /></a>
+              <a
+                href="https://youtube.com/"
+                class="footer__social-btn"
+                target="_blank"
+                ><img
+                  class="footer__icon footer__icon-fix"
+                  src="./assets/img/vecteezy_youtube-logo-icon-symbol-editorial-vector-illustration_10486739.svg"
+                  alt="Youtube"
+                />
+              </a>
+              <a href="#!" class="footer__social-btn" target="_blank"
+                ><img
+                  class="footer__icon"
+                  src="./assets/img/vecteezy_location-black-and-white-vector-icon_26813125.svg"
+                  alt="location"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="footer__copyright">
+          <p class="footer__copyright-text">
+            2024 GDN. Copyright and All rights reserved.
+          </p>
+        </div>
+      </div>
+    </section>
+  </body>
+  <script src="./register.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"
+  ></script>
+</html>
