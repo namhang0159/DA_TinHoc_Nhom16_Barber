@@ -1,48 +1,45 @@
-function getUserLogin() {
-  return JSON.parse(localStorage.getItem("userLogin")) || null;
-}
-const loginElement = document.getElementById("login__text");
-const signupElement = document.getElementById("signup__text");
-const userLoginElement = document.getElementById("userLogin");
-const usernameElement = document.getElementById("usernamett");
-const emailElement = document.getElementById("emailtt");
-const usernameboxE = document.getElementById("usernamebox");
+// Kiểm tra trạng thái đăng nhập
+const loginButton = document.getElementById("login__text");
+const signupButton = document.getElementById("signup__text");
+const usernameBox = document.getElementById("usernamebox");
+const userLogin = document.getElementById("userLogin");
 
-const userLogin = getUserLogin();
-if (userLogin) {
-  loginElement.style.display = "none";
-  signupElement.style.display = "none";
-}
-function updateUI() {
-  const userLogin = getUserLogin();
-  if (userLogin && userLogin.username) {
-    userLoginElement.style.display = "block";
-    userLoginElement.innerHTML = userLogin.username;
-    loginElement.style.display = "none";
-    signupElement.style.display = "none";
+// Giả lập trạng thái đăng nhập
+const user = JSON.parse(localStorage.getItem("user")); // Lấy thông tin người dùng từ LocalStorage
 
-    // Hiển thị phần trang cá nhân
-    usernameElement.innerHTML = userLogin.username;
-    emailElement.innerHTML = userLogin.email;
-    usernameboxE.style.display = "block";
-  } else {
-    userLoginElement.style.display = "none";
-    loginElement.style.display = "block";
-    signupElement.style.display = "block";
-    usernameboxE.style.display = "none";
+if (user && user.username) {
+  // Ẩn các nút Đăng nhập và Đăng ký
+  loginButton.style.display = "none";
+  signupButton.style.display = "none";
 
-    // Đảm bảo không hiển thị "undefined" hoặc thông tin không mong muốn
-    userLoginElement.innerHTML = "";
-    usernameElement.innerHTML = "";
-    emailElement.innerHTML = "";
-  }
+  // Hiển thị thông tin username
+  usernameBox.style.display = "block";
+  userLogin.innerHTML = user.username;
+} else {
+  // Hiển thị nút Đăng nhập và Đăng ký
+  loginButton.style.display = "inline-block";
+  signupButton.style.display = "inline-block";
+
+  // Ẩn hộp username
+  usernameBox.style.display = "none";
 }
 
+// Xử lý đăng nhập (giả lập)
+function login(username) {
+  const user = { username };
+  localStorage.setItem("user", JSON.stringify(user)); // Lưu trạng thái đăng nhập
+  window.location.reload(); // Tải lại trang để cập nhật giao diện
+}
+
+// Xử lý đăng xuất
 function logout() {
-  window.location.href = "index.html"; // Chuyển hướng đến trang chủ (hoặc trang đăng nhập)
-  localStorage.removeItem("userLogin");
-  updateUI(); // Cập nhật lại giao diện sau khi xóa thông tin người dùng
+  localStorage.removeItem("user"); // Xóa trạng thái đăng nhập
+  window.location.reload(); // Tải lại trang để cập nhật giao diện
 }
 
-// Cập nhật giao diện khi trang được tải
-updateUI();
+// Thêm sự kiện vào các nút (giả lập đăng nhập/đăng xuất)
+document.getElementById("login__text").addEventListener("click", () => {
+  login("Tên người dùng"); // Thay bằng username thực tế khi triển khai
+});
+
+document.getElementById("userLogin").addEventListener("click", logout);

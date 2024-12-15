@@ -86,5 +86,133 @@ app.post("/signup", (req, res) => {
   });
 });
 
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Vui lòng nhập đầy đủ thông tin!" });
+  }
+
+  // Kiểm tra tài khoản trong cơ sở dữ liệu
+  const query = "SELECT * FROM users WHERE username = ? AND password = ?";
+  db.query(query, [username, password], (err, results) => {
+    if (err) {
+      console.error("Lỗi truy vấn MySQL:", err);
+      return res.status(500).json({ success: false, message: "Lỗi server." });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Tên đăng nhập hoặc mật khẩu không chính xác.",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Đăng nhập thành công!",
+    });
+  });
+});
+// API: Lấy danh sách đặt lịch
+app.get("/get-bookings", (req, res) => {
+  const query = "SELECT * FROM datlich ORDER BY date ASC, time ASC";
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("Lỗi khi truy vấn dữ liệu:", err);
+      res.status(500).json({ error: "Không thể lấy dữ liệu" });
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+// API: Xóa một đặt lịch theo ID
+app.delete("/delete-booking/:id", (req, res) => {
+  const bookingId = req.params.id;
+
+  const query = "DELETE FROM datlich WHERE id = ?";
+  db.query(query, [bookingId], (err, result) => {
+    if (err) {
+      console.error("Lỗi khi xóa đặt lịch:", err);
+      return res.status(500).json({ error: "Lỗi server khi xóa đặt lịch" });
+    }
+
+    if (result.affectedRows === 0) {
+      return res
+        .status(404)
+        .json({ message: "Không tìm thấy đặt lịch để xóa" });
+    }
+
+    res.status(200).json({ message: "Xóa đặt lịch thành công!" });
+  });
+});
+
+// API: Sửa thông tin đặt lịch theo ID
+app.put("/edit-booking/:id", (req, res) => {
+  const bookingId = req.params.id;
+  const { name, phone, time, date } = req.body;
+
+  if (!name || !phone || !time || !date) {
+    return res.status(400).json({ error: "Thiếu thông tin để cập nhật" });
+  }
+
+  const query =
+    "UPDATE datlich SET name = ?, phone = ?, time = ?, date = ? WHERE id = ?";
+  db.query(query, [name, phone, time, date, bookingId], (err, result) => {
+    if (err) {
+      console.error("Lỗi khi cập nhật đặt lịch:", err);
+      return res
+        .status(500)
+        .json({ error: "Lỗi server khi cập nhật đặt lịch" });
+    }
+
+    if (result.affectedRows === 0) {
+      return res
+        .status(404)
+        .json({ message: "Không tìm thấy đặt lịch để cập nhật" });
+    }
+
+    res.status(200).json({ message: "Cập nhật đặt lịch thành công!" });
+  });
+});
+
+app.get("/get-users", (req, res) => {
+  const query = "SELECT * FROM users";
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("Lỗi khi lấy danh sách người dùng:", err);
+      return res.status(500).json({ error: "Lỗi server" });
+    }
+    res.json(results);
+  });
+});
+app.put("/edit-user/:id", (req, res) => {
+  const userId = req.params.id;
+  const { username, email, password } = req.body;
+
+  if (!username || !email || !password) {
+    return res.status(400).json({ error: "Thiếu thông tin cần sửa" });
+  }
+
+  const query =
+    "UPDATE users SET username = ?, email = ?, password = ? WHERE id = ?";
+  db.query(query, [username, email, password, userId], (err, result) => {
+    if (err) {
+      console.error("Lỗi khi cập nhật thông tin người dùng:", err);
+      return res.status(500).json({ error: "Lỗi server" });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Người dùng không tồn tại" });
+    }
+
+    res.status(200).json({ message: "Cập nhật thông tin thành công!" });
+  });
+});
+
 const PORT = 3000;
+app.listen;
 app.listen(PORT, () => console.log(`Server chạy tại http://localhost:${PORT}`));

@@ -33,8 +33,13 @@ document.addEventListener("DOMContentLoaded", function () {
         .then((data) => {
           if (data.success) {
             alert("Dăng ký thành công!");
+            setTimeout(() => {
+              window.location.href = "./login.html";
+            }, 2000);
           } else {
-            alert("Đã có lỗi xảy ra, vui lòng thử lại.");
+            alert(
+              "Đã có lỗi xảy ra, vui lòng kiểm tra tên và email và thử lại."
+            );
           }
         })
         .catch((error) => {

@@ -1,55 +1,47 @@
-// const bookingF = document.getElementById("bookingForm");
-// const loginElement = document.getElementById("login__text");
-// const signupElement = document.getElementById("signup__text");
-// function getUserLogin() {
-//   return JSON.parse(localStorage.getItem("userLogin")) || null;
-// }
-// const userLogin = getUserLogin();
-// if (userLogin) {
-//   loginElement.style.display = "none";
-//   signupElement.style.display = "none";
-// }
+// Kiểm tra trạng thái đăng nhập
+function checkLoginStatus() {
+  const token = localStorage.getItem("authToken"); // Giả sử token được lưu trong localStorage khi đăng nhập
+  return token !== null; // Nếu token tồn tại, nghĩa là đã đăng nhập
+}
 
-// bookingF.addEventListener("submit", function (event) {
-//   event.preventDefault(); // Ngăn form gửi dữ liệu
+// Hàm xử lý đặt lịch
+async function handleBooking(event) {
+  event.preventDefault(); // Ngăn chặn hành vi gửi form mặc định
 
-//   // Lấy dữ liệu từ form
-//   const name = document.getElementById("name");
-//   const phone = document.getElementById("phone");
-//   const time = document.getElementById("time");
-//   const date = document.getElementById("date");
+  // Kiểm tra đăng nhập
+  if (!checkLoginStatus()) {
+    alert("Bạn cần đăng nhập trước khi đặt lịch!");
+    window.location.href = "login.html"; // Chuyển hướng đến trang đăng nhập
+    return;
+  } else {
+    const form = document.getElementById("bookingForm");
 
-//   // Kiểm tra thông tin
-//   if (!name || !phone || !time || !date) {
-//     alert("Vui lòng điền đầy đủ thông tin!");
-//     return;
-//   }
+    // Lấy dữ liệu từ form
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries()); // Chuyển đổi FormData thành object
 
-//   if (userLogin) {
-//     loginElement.style.display = "none";
-//     signupElement.style.display = "none";
-//     // Gửi dữ liệu tới server qua fetch
-//     const bookingData = { name, phone, time, date };
-//     fetch("./db/connect.php", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" --},
-//       body: JSON.stringify(bookingData),
-//     })
-//       .then((response) => response.json())
-//       .then((data) => {
-//         if (data.status === "success") {
-//           alert(data.message);
-//           // Xóa dữ liệu đã nhập trong form
-//           bookingF.reset();
-//         } else {
-//           alert("Lỗi khi đặt lịch: " + data.message);
-//         }
-//       })
-//       .catch((error) => {
-//         console.error("Lỗi:", error);
-//         alert("Có lỗi xảy ra, vui lòng thử lại sau.");
-//       });
-//   } else {
-//     alert("Bạn cần đăng nhập trước khi đặt lịch!");
-//   }
-// });
+    // Thêm user_id vào dữ liệu
+    const token = localStorage.getItem("authToken");
+    data.user_id = token; // Giả sử token chính là user_id, nếu không thì bạn cần lấy user_id từ token hoặc session
+
+    // Gửi yêu cầu đặt lịch
+    try {
+      const response = await fetch("http://localhost:3000/submit-booking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.text();
+      alert(result); // Thông báo kết quả
+    } catch (err) {
+      console.error("Lỗi khi gửi yêu cầu:", err);
+      alert("Đặt lịch thất bại, vui lòng thử lại!");
+    }
+  }
+}
+
+// Gắn sự kiện submit cho form
+document
+  .getElementById("bookingForm")
+  .addEventListener("submit", handleBooking);

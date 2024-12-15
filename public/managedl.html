@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Lý Đặt Lịch</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <a href="./manageuser.html">Quản Lý User</a>
+    <div class="container">
+      <h1>Quản Lý Đặt Lịch</h1>
+      <table border="1" class="booking-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Họ và Tên</th>
+            <th>Số Điện Thoại</th>
+            <th>Giờ</th>
+            <th>Ngày</th>
+            <th>Hành Động</th>
+            <!-- Cột hành động cho nút sửa và xóa -->
+          </tr>
+        </thead>
+        <tbody id="booking-table-body">
+          <!-- Dữ liệu sẽ được chèn vào đây -->
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      async function fetchBookings() {
+        try {
+          const response = await fetch("http://localhost:3000/get-bookings");
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          // Kiểm tra nếu dữ liệu trả về không phải mảng
+          const bookings = Array.isArray(data) ? data : data.data;
+
+          if (!Array.isArray(bookings)) {
+            throw new TypeError("Dữ liệu không phải là mảng!");
+          }
+
+          // Lấy phần tử tbody trong bảng
+          const tableBody = document.getElementById("booking-table-body");
+
+          // Xóa dữ liệu cũ trong bảng nếu có
+          tableBody.innerHTML = "";
+
+          // Lặp qua mỗi booking và chèn vào bảng
+          bookings.forEach((booking) => {
+            // Tạo một dòng mới trong bảng
+            const row = document.createElement("tr");
+
+            // Tạo các ô dữ liệu cho mỗi booking
+            const idCell = document.createElement("td");
+            idCell.textContent = booking.id || "Không có ID";
+            row.appendChild(idCell);
+
+            const nameCell = document.createElement("td");
+            nameCell.textContent = booking.name || "Không có tên";
+            row.appendChild(nameCell);
+
+            const phoneCell = document.createElement("td");
+            phoneCell.textContent = booking.phone || "Không có số điện thoại";
+            row.appendChild(phoneCell);
+
+            const timeCell = document.createElement("td");
+            timeCell.textContent = booking.time || "Không có giờ";
+            row.appendChild(timeCell);
+
+            const dateCell = document.createElement("td");
+            dateCell.textContent = booking.date || "Không có ngày";
+            row.appendChild(dateCell);
+
+            // Thêm cột hành động với nút Sửa và Xóa
+            const actionCell = document.createElement("td");
+            const editButton = document.createElement("button");
+            editButton.textContent = "Sửa";
+            editButton.onclick = () => editBooking(booking.id);
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Xóa";
+            deleteButton.onclick = () => deleteBooking(booking.id);
+
+            actionCell.appendChild(editButton);
+            actionCell.appendChild(deleteButton);
+            row.appendChild(actionCell);
+
+            // Thêm dòng vào tbody
+            tableBody.appendChild(row);
+          });
+        } catch (error) {
+          console.error("Lỗi khi lấy dữ liệu:", error);
+        }
+      }
+
+      // Hàm xóa booking
+      async function deleteBooking(bookingId) {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/delete-booking/${bookingId}`,
+            {
+              method: "DELETE",
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`Lỗi khi xóa booking: ${response.status}`);
+          }
+
+          alert("Đặt lịch đã được xóa!");
+          fetchBookings(); // Cập nhật lại bảng sau khi xóa
+        } catch (error) {
+          console.error("Lỗi khi xóa đặt lịch:", error);
+        }
+      }
+
+      // Hàm sửa booking
+      function editBooking(bookingId) {
+        const newName = prompt("Nhập tên mới:");
+        const newPhone = prompt("Nhập số điện thoại mới:");
+        const newTime = prompt("Nhập giờ mới:");
+        const newDate = prompt("Nhập ngày mới:");
+
+        // Gửi dữ liệu sửa đổi lên server
+        fetch(`http://localhost:3000/edit-booking/${bookingId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: newName,
+            phone: newPhone,
+            time: newTime,
+            date: newDate,
+          }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Không thể sửa thông tin đặt lịch.");
+            }
+            alert("Thông tin đặt lịch đã được cập nhật!");
+            fetchBookings(); // Cập nhật lại bảng sau khi sửa
+          })
+          .catch((error) => {
+            console.error("Lỗi khi sửa đặt lịch:", error);
+          });
+      }
+
+      // Gọi hàm fetchBookings khi trang được tải
+      document.addEventListener("DOMContentLoaded", fetchBookings);
+    </script>
+  </body>
+</html>

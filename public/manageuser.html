@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Lý Người Dùng</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <a href="./managedl.html">Quản Lý đặt lịch</a>
+    <div class="container">
+      <h1>Quản Lý Người Dùng</h1>
+      <button onclick="addUser()">Thêm Người Dùng</button>
+      <table border="1" class="user-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tên Đăng Nhập</th>
+            <th>Email</th>
+            <th>Mật Khẩu</th>
+            <th>Hành Động</th>
+          </tr>
+        </thead>
+        <tbody id="user-table-body">
+          <!-- Dữ liệu người dùng sẽ được chèn ở đây -->
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      // Hàm lấy danh sách người dùng
+      async function fetchUsers() {
+        try {
+          const response = await fetch("http://localhost:3000/get-users");
+          const data = await response.json();
+
+          const tableBody = document.getElementById("user-table-body");
+          tableBody.innerHTML = ""; // Xóa dữ liệu cũ
+
+          data.forEach((user) => {
+            const row = document.createElement("tr");
+
+            const idCell = document.createElement("td");
+            idCell.textContent = user.id;
+            row.appendChild(idCell);
+
+            const usernameCell = document.createElement("td");
+            usernameCell.textContent = user.username;
+            row.appendChild(usernameCell);
+
+            const emailCell = document.createElement("td");
+            emailCell.textContent = user.email;
+            row.appendChild(emailCell);
+
+            const passwordCell = document.createElement("td");
+            passwordCell.textContent = user.password; // Hiển thị mật khẩu
+            row.appendChild(passwordCell);
+
+            // Hành động (Sửa, Xóa)
+            const actionCell = document.createElement("td");
+            const editButton = document.createElement("button");
+            editButton.textContent = "Sửa";
+            editButton.onclick = () => editUser(user.id);
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Xóa";
+            deleteButton.onclick = () => deleteUser(user.id);
+
+            actionCell.appendChild(editButton);
+            actionCell.appendChild(deleteButton);
+            row.appendChild(actionCell);
+
+            tableBody.appendChild(row);
+          });
+        } catch (error) {
+          console.error("Lỗi khi lấy danh sách người dùng:", error);
+        }
+      }
+
+      // Hàm thêm người dùng
+      function addUser() {
+        const username = prompt("Nhập tên đăng nhập:");
+        const email = prompt("Nhập email:");
+        const password = prompt("Nhập mật khẩu:");
+
+        fetch("http://localhost:3000/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, email, password }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              alert("Thêm người dùng thành công!");
+              fetchUsers();
+            } else {
+              alert("Lỗi khi thêm người dùng!");
+            }
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+
+      // Hàm xóa người dùng
+      async function deleteUser(userId) {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/delete-user/${userId}`,
+            { method: "DELETE" }
+          );
+
+          if (response.ok) {
+            alert("Xóa người dùng thành công!");
+            fetchUsers();
+          } else {
+            alert("Lỗi khi xóa người dùng!");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+
+      // Hàm sửa người dùng
+      function editUser(userId) {
+        const newUsername = prompt("Nhập tên đăng nhập mới:");
+        const newEmail = prompt("Nhập email mới:");
+        const newPassword = prompt("Nhập mật khẩu mới:");
+
+        fetch(`http://localhost:3000/edit-user/${userId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: newUsername,
+            email: newEmail,
+            password: newPassword,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              alert("Cập nhật thông tin người dùng thành công!");
+              fetchUsers();
+            } else {
+              alert("Lỗi khi cập nhật người dùng!");
+            }
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+
+      // Tải danh sách người dùng khi trang được mở
+      document.addEventListener("DOMContentLoaded", fetchUsers);
+    </script>
+  </body>
+</html>
