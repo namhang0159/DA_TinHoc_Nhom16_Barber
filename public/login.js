@@ -19,6 +19,8 @@ document.getElementById("login-f").addEventListener("submit", function (e) {
 
         // Lưu token vào localStorage
         localStorage.setItem("authToken", data.token);
+        localStorage.setItem("username", username);
+        // localStorage.setItem("userId", data.user_id);
 
         // Chuyển hướng sau khi đăng nhập
         setTimeout(() => {

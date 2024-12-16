@@ -18,8 +18,8 @@
             <th>Số Điện Thoại</th>
             <th>Giờ</th>
             <th>Ngày</th>
+            <th>Username</th>
             <th>Hành Động</th>
-            <!-- Cột hành động cho nút sửa và xóa -->
           </tr>
         </thead>
         <tbody id="booking-table-body">
@@ -29,6 +29,7 @@
     </div>
 
     <script>
+      // Hàm lấy danh sách đặt lịch từ API và hiển thị trên giao diện
       async function fetchBookings() {
         try {
           const response = await fetch("http://localhost:3000/get-bookings");
@@ -38,9 +39,8 @@
 
           const data = await response.json();
 
-          // Kiểm tra nếu dữ liệu trả về không phải mảng
+          // Kiểm tra dữ liệu trả về
           const bookings = Array.isArray(data) ? data : data.data;
-
           if (!Array.isArray(bookings)) {
             throw new TypeError("Dữ liệu không phải là mảng!");
           }
@@ -48,15 +48,14 @@
           // Lấy phần tử tbody trong bảng
           const tableBody = document.getElementById("booking-table-body");
 
-          // Xóa dữ liệu cũ trong bảng nếu có
+          // Xóa dữ liệu cũ trong bảng
           tableBody.innerHTML = "";
 
-          // Lặp qua mỗi booking và chèn vào bảng
+          // Lặp qua mỗi booking và thêm vào bảng
           bookings.forEach((booking) => {
-            // Tạo một dòng mới trong bảng
             const row = document.createElement("tr");
 
-            // Tạo các ô dữ liệu cho mỗi booking
+            // Các ô dữ liệu
             const idCell = document.createElement("td");
             idCell.textContent = booking.id || "Không có ID";
             row.appendChild(idCell);
@@ -77,11 +76,16 @@
             dateCell.textContent = booking.date || "Không có ngày";
             row.appendChild(dateCell);
 
-            // Thêm cột hành động với nút Sửa và Xóa
+            const usernameCell = document.createElement("td");
+            usernameCell.textContent = booking.username || "Không có username";
+            row.appendChild(usernameCell);
+
+            // Cột hành động
             const actionCell = document.createElement("td");
             const editButton = document.createElement("button");
             editButton.textContent = "Sửa";
             editButton.onclick = () => editBooking(booking.id);
+
             const deleteButton = document.createElement("button");
             deleteButton.textContent = "Xóa";
             deleteButton.onclick = () => deleteBooking(booking.id);
@@ -90,7 +94,7 @@
             actionCell.appendChild(deleteButton);
             row.appendChild(actionCell);
 
-            // Thêm dòng vào tbody
+            // Thêm dòng vào bảng
             tableBody.appendChild(row);
           });
         } catch (error) {
@@ -98,14 +102,12 @@
         }
       }
 
-      // Hàm xóa booking
+      // Hàm xóa đặt lịch
       async function deleteBooking(bookingId) {
         try {
           const response = await fetch(
             `http://localhost:3000/delete-booking/${bookingId}`,
-            {
-              method: "DELETE",
-            }
+            { method: "DELETE" }
           );
 
           if (!response.ok) {
@@ -119,14 +121,13 @@
         }
       }
 
-      // Hàm sửa booking
+      // Hàm sửa đặt lịch
       function editBooking(bookingId) {
         const newName = prompt("Nhập tên mới:");
         const newPhone = prompt("Nhập số điện thoại mới:");
         const newTime = prompt("Nhập giờ mới:");
         const newDate = prompt("Nhập ngày mới:");
 
-        // Gửi dữ liệu sửa đổi lên server
         fetch(`http://localhost:3000/edit-booking/${bookingId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

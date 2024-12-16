@@ -39,7 +39,7 @@ function logout() {
 
 // Thêm sự kiện vào các nút (giả lập đăng nhập/đăng xuất)
 document.getElementById("login__text").addEventListener("click", () => {
-  login("Tên người dùng"); // Thay bằng username thực tế khi triển khai
+  login("Người dùng"); // Thay bằng username thực tế khi triển khai
 });
 
 document.getElementById("userLogin").addEventListener("click", logout);

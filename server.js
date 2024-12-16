@@ -27,17 +27,36 @@ db.connect((err) => {
 app.get("/", (req, res) => {
   res.send("Trang chính hoạt động!");
 });
+// app.post("/submit-booking", (req, res) => {
+//   const { name, phone, time, date } = req.body;
+
+//   if (!name || !phone || !time || !date) {
+//     return res.status(400).send("Thiếu thông tin đặt lịch!");
+//   }
+
+//   const sql =
+//     "INSERT INTO datlich (name, phone, time, date) VALUES (?, ?, ?, ?)";
+
+//   db.query(sql, [name, phone, time, date], (err, result) => {
+//     if (err) {
+//       console.error("Lỗi khi thực hiện query:", err);
+//       return res.status(500).send("Đã xảy ra lỗi!");
+//     }
+//     res.send("Đặt lịch thành công!");
+//   });
+// });
+
 app.post("/submit-booking", (req, res) => {
-  const { name, phone, time, date } = req.body;
+  const { username, name, phone, time, date } = req.body;
 
   if (!name || !phone || !time || !date) {
     return res.status(400).send("Thiếu thông tin đặt lịch!");
   }
 
   const sql =
-    "INSERT INTO datlich (name, phone, time, date) VALUES (?, ?, ?, ?)";
+    "INSERT INTO datlich (username, name, phone, time, date) VALUES (?, ?, ?, ?, ?)";
 
-  db.query(sql, [name, phone, time, date], (err, result) => {
+  db.query(sql, [username, name, phone, time, date], (err, result) => {
     if (err) {
       console.error("Lỗi khi thực hiện query:", err);
       return res.status(500).send("Đã xảy ra lỗi!");
@@ -117,9 +136,31 @@ app.post("/login", (req, res) => {
   });
 });
 // API: Lấy danh sách đặt lịch
+// app.get("/get-bookings", (req, res) => {
+//   const query = "SELECT * FROM datlich ORDER BY date ASC, time ASC";
+//   db.query(query, (err, results) => {
+//     if (err) {
+//       console.error("Lỗi khi truy vấn dữ liệu:", err);
+//       res.status(500).json({ error: "Không thể lấy dữ liệu" });
+//     } else {
+//       res.json(results);
+//     }
+//   });
+// });
 app.get("/get-bookings", (req, res) => {
-  const query = "SELECT * FROM datlich ORDER BY date ASC, time ASC";
-  db.query(query, (err, results) => {
+  const username = req.query.username; // Nhận username từ query string
+
+  let query = "SELECT * FROM datlich";
+  const params = [];
+
+  if (username) {
+    query += " WHERE username = ?";
+    params.push(username);
+  }
+
+  query += " ORDER BY date ASC, time ASC";
+
+  db.query(query, params, (err, results) => {
     if (err) {
       console.error("Lỗi khi truy vấn dữ liệu:", err);
       res.status(500).json({ error: "Không thể lấy dữ liệu" });
