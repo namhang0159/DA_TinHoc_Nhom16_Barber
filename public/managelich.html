@@ -61,10 +61,11 @@
 
           bookings.forEach((booking) => {
             const row = document.createElement("tr");
-
+            // Chuyển đổi định dạng ngày từ ISO thành chỉ ngày (YYYY-MM-DD)
+            const date = new Date(booking.date).toISOString().split("T")[0];
             row.innerHTML = `
               <td>${booking.id || "N/A"}</td>
-              <td>${booking.date || "N/A"}</td>
+              <td>${date || "N/A"}</td>
               <td>${booking.time || "N/A"}</td>
               <td>
                 <button class="btn btn-danger btn-sm" onclick="deleteBooking(${

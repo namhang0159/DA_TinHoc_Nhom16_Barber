@@ -69,13 +69,15 @@
 
           bookings.forEach((booking) => {
             const row = document.createElement("tr");
+            // Chuyển đổi định dạng ngày từ ISO thành chỉ ngày (YYYY-MM-DD)
+            const date = new Date(booking.date).toISOString().split("T")[0];
 
             row.innerHTML = `
               <td>${booking.id || "Không có ID"}</td>
               <td>${booking.name || "Không có tên"}</td>
               <td>${booking.phone || "Không có số điện thoại"}</td>
               <td>${booking.time || "Không có giờ"}</td>
-              <td>${booking.date || "Không có ngày"}</td>
+              <td>${date || "Không có ngày"}</td>
               <td>${booking.username || "Không có username"}</td>
               <td class="action-buttons">
                 <button class="btn btn-warning btn-sm" onclick="editBooking(${
