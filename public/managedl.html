@@ -4,14 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quản Lý Đặt Lịch</title>
-    <link rel="stylesheet" href="./assets/css/style.css" />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .action-buttons button {
+        margin-right: 5px;
+      }
+    </style>
   </head>
   <body>
-    <a href="./manageuser.html">Quản Lý User</a>
-    <div class="container">
-      <h1>Quản Lý Đặt Lịch</h1>
-      <table border="1" class="booking-table">
-        <thead>
+    <div class="container my-5">
+      <div class="d-flex justify-content-between mb-4">
+        <h1 class="text-primary">Quản Lý Đặt Lịch</h1>
+        <div>
+          <a href="./manageuser.html" class="btn btn-secondary me-2"
+            >Quản Lý User</a
+          >
+          <a href="./managelich.html" class="btn btn-secondary"
+            >Quản Lý Lịch Cắt</a
+          >
+        </div>
+      </div>
+      <table class="table table-hover table-bordered">
+        <thead class="table-dark">
           <tr>
             <th>ID</th>
             <th>Họ và Tên</th>
@@ -28,6 +46,8 @@
       </table>
     </div>
 
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       // Hàm lấy danh sách đặt lịch từ API và hiển thị trên giao diện
       async function fetchBookings() {
@@ -39,62 +59,34 @@
 
           const data = await response.json();
 
-          // Kiểm tra dữ liệu trả về
           const bookings = Array.isArray(data) ? data : data.data;
           if (!Array.isArray(bookings)) {
             throw new TypeError("Dữ liệu không phải là mảng!");
           }
 
-          // Lấy phần tử tbody trong bảng
           const tableBody = document.getElementById("booking-table-body");
-
-          // Xóa dữ liệu cũ trong bảng
           tableBody.innerHTML = "";
 
-          // Lặp qua mỗi booking và thêm vào bảng
           bookings.forEach((booking) => {
             const row = document.createElement("tr");
 
-            // Các ô dữ liệu
-            const idCell = document.createElement("td");
-            idCell.textContent = booking.id || "Không có ID";
-            row.appendChild(idCell);
+            row.innerHTML = `
+              <td>${booking.id || "Không có ID"}</td>
+              <td>${booking.name || "Không có tên"}</td>
+              <td>${booking.phone || "Không có số điện thoại"}</td>
+              <td>${booking.time || "Không có giờ"}</td>
+              <td>${booking.date || "Không có ngày"}</td>
+              <td>${booking.username || "Không có username"}</td>
+              <td class="action-buttons">
+                <button class="btn btn-warning btn-sm" onclick="editBooking(${
+                  booking.id
+                })">Sửa</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteBooking(${
+                  booking.id
+                })">Xóa</button>
+              </td>
+            `;
 
-            const nameCell = document.createElement("td");
-            nameCell.textContent = booking.name || "Không có tên";
-            row.appendChild(nameCell);
-
-            const phoneCell = document.createElement("td");
-            phoneCell.textContent = booking.phone || "Không có số điện thoại";
-            row.appendChild(phoneCell);
-
-            const timeCell = document.createElement("td");
-            timeCell.textContent = booking.time || "Không có giờ";
-            row.appendChild(timeCell);
-
-            const dateCell = document.createElement("td");
-            dateCell.textContent = booking.date || "Không có ngày";
-            row.appendChild(dateCell);
-
-            const usernameCell = document.createElement("td");
-            usernameCell.textContent = booking.username || "Không có username";
-            row.appendChild(usernameCell);
-
-            // Cột hành động
-            const actionCell = document.createElement("td");
-            const editButton = document.createElement("button");
-            editButton.textContent = "Sửa";
-            editButton.onclick = () => editBooking(booking.id);
-
-            const deleteButton = document.createElement("button");
-            deleteButton.textContent = "Xóa";
-            deleteButton.onclick = () => deleteBooking(booking.id);
-
-            actionCell.appendChild(editButton);
-            actionCell.appendChild(deleteButton);
-            row.appendChild(actionCell);
-
-            // Thêm dòng vào bảng
             tableBody.appendChild(row);
           });
         } catch (error) {
@@ -102,7 +94,6 @@
         }
       }
 
-      // Hàm xóa đặt lịch
       async function deleteBooking(bookingId) {
         try {
           const response = await fetch(
@@ -115,13 +106,12 @@
           }
 
           alert("Đặt lịch đã được xóa!");
-          fetchBookings(); // Cập nhật lại bảng sau khi xóa
+          fetchBookings();
         } catch (error) {
           console.error("Lỗi khi xóa đặt lịch:", error);
         }
       }
 
-      // Hàm sửa đặt lịch
       function editBooking(bookingId) {
         const newName = prompt("Nhập tên mới:");
         const newPhone = prompt("Nhập số điện thoại mới:");
@@ -143,14 +133,13 @@
               throw new Error("Không thể sửa thông tin đặt lịch.");
             }
             alert("Thông tin đặt lịch đã được cập nhật!");
-            fetchBookings(); // Cập nhật lại bảng sau khi sửa
+            fetchBookings();
           })
           .catch((error) => {
             console.error("Lỗi khi sửa đặt lịch:", error);
           });
       }
 
-      // Gọi hàm fetchBookings khi trang được tải
       document.addEventListener("DOMContentLoaded", fetchBookings);
     </script>
   </body>

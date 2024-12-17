@@ -4,15 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quản Lý Người Dùng</title>
-    <link rel="stylesheet" href="./assets/css/style.css" />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .action-buttons button {
+        margin-right: 5px;
+      }
+    </style>
   </head>
   <body>
-    <a href="./managedl.html">Quản Lý đặt lịch</a>
-    <div class="container">
-      <h1>Quản Lý Người Dùng</h1>
-      <button onclick="addUser()">Thêm Người Dùng</button>
-      <table border="1" class="user-table">
-        <thead>
+    <div class="container my-5">
+      <div class="d-flex justify-content-between mb-4">
+        <h1 class="text-primary">Quản Lý Người Dùng</h1>
+        <div>
+          <a href="./managedl.html" class="btn btn-secondary me-2"
+            >Quản Lý Đặt Lịch</a
+          >
+          <a href="./managelich.html" class="btn btn-secondary"
+            >Quản Lý Lịch Cắt</a
+          >
+        </div>
+      </div>
+      <button class="btn btn-success mb-4" onclick="addUser()">
+        Thêm Người Dùng
+      </button>
+      <table class="table table-hover table-bordered">
+        <thead class="table-dark">
           <tr>
             <th>ID</th>
             <th>Tên Đăng Nhập</th>
@@ -27,6 +47,8 @@
       </table>
     </div>
 
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       // Hàm lấy danh sách người dùng
       async function fetchUsers() {
@@ -40,35 +62,20 @@
           data.forEach((user) => {
             const row = document.createElement("tr");
 
-            const idCell = document.createElement("td");
-            idCell.textContent = user.id;
-            row.appendChild(idCell);
-
-            const usernameCell = document.createElement("td");
-            usernameCell.textContent = user.username;
-            row.appendChild(usernameCell);
-
-            const emailCell = document.createElement("td");
-            emailCell.textContent = user.email;
-            row.appendChild(emailCell);
-
-            const passwordCell = document.createElement("td");
-            passwordCell.textContent = user.password; // Hiển thị mật khẩu
-            row.appendChild(passwordCell);
-
-            // Hành động (Sửa, Xóa)
-            const actionCell = document.createElement("td");
-            const editButton = document.createElement("button");
-            editButton.textContent = "Sửa";
-            editButton.onclick = () => editUser(user.id);
-
-            const deleteButton = document.createElement("button");
-            deleteButton.textContent = "Xóa";
-            deleteButton.onclick = () => deleteUser(user.id);
-
-            actionCell.appendChild(editButton);
-            actionCell.appendChild(deleteButton);
-            row.appendChild(actionCell);
+            row.innerHTML = `
+              <td>${user.id || "N/A"}</td>
+              <td>${user.username || "N/A"}</td>
+              <td>${user.email || "N/A"}</td>
+              <td>${user.password || "N/A"}</td>
+              <td class="action-buttons">
+                <button class="btn btn-warning btn-sm" onclick="editUser(${
+                  user.id
+                })">Sửa</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteUser(${
+                  user.id
+                })">Xóa</button>
+              </td>
+            `;
 
             tableBody.appendChild(row);
           });
