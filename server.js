@@ -142,25 +142,25 @@ app.get("/get-bookings", (req, res) => {
 });
 
 // API: Xóa một đặt lịch theo ID
-// app.delete("/delete-booking/:id", (req, res) => {
-//   const bookingId = req.params.id;
+app.delete("/delete-booking/:id", (req, res) => {
+  const bookingId = req.params.id;
 
-//   const query = "DELETE FROM datlich WHERE id = ?";
-//   db.query(query, [bookingId], (err, result) => {
-//     if (err) {
-//       console.error("Lỗi khi xóa đặt lịch:", err);
-//       return res.status(500).json({ error: "Lỗi server khi xóa đặt lịch" });
-//     }
+  const query = "DELETE FROM datlich WHERE id = ?";
+  db.query(query, [bookingId], (err, result) => {
+    if (err) {
+      console.error("Lỗi khi xóa đặt lịch:", err);
+      return res.status(500).json({ error: "Lỗi server khi xóa đặt lịch" });
+    }
 
-//     if (result.affectedRows === 0) {
-//       return res
-//         .status(404)
-//         .json({ message: "Không tìm thấy đặt lịch để xóa" });
-//     }
+    if (result.affectedRows === 0) {
+      return res
+        .status(404)
+        .json({ message: "Không tìm thấy đặt lịch để xóa" });
+    }
 
-//     res.status(200).json({ message: "Xóa đặt lịch thành công!" });
-//   });
-// });
+    res.status(200).json({ message: "Xóa đặt lịch thành công!" });
+  });
+});
 app.delete("/delete-user/:id", (req, res) => {
   const userId = req.params.id;
 
@@ -182,33 +182,33 @@ app.delete("/delete-user/:id", (req, res) => {
 });
 
 // API: Sửa thông tin đặt lịch theo ID
-// app.put("/edit-booking/:id", (req, res) => {
-//   const bookingId = req.params.id;
-//   const { name, phone, time, date } = req.body;
+app.put("/edit-booking/:id", (req, res) => {
+  const bookingId = req.params.id;
+  const { name, phone, time, date } = req.body;
 
-//   if (!name || !phone || !time || !date) {
-//     return res.status(400).json({ error: "Thiếu thông tin để cập nhật" });
-//   }
+  if (!name || !phone || !time || !date) {
+    return res.status(400).json({ error: "Thiếu thông tin để cập nhật" });
+  }
 
-//   const query =
-//     "UPDATE datlich SET name = ?, phone = ?, time = ?, date = ? WHERE id = ?";
-//   db.query(query, [name, phone, time, date, bookingId], (err, result) => {
-//     if (err) {
-//       console.error("Lỗi khi cập nhật đặt lịch:", err);
-//       return res
-//         .status(500)
-//         .json({ error: "Lỗi server khi cập nhật đặt lịch" });
-//     }
+  const query =
+    "UPDATE datlich SET name = ?, phone = ?, time = ?, date = ? WHERE id = ?";
+  db.query(query, [name, phone, time, date, bookingId], (err, result) => {
+    if (err) {
+      console.error("Lỗi khi cập nhật đặt lịch:", err);
+      return res
+        .status(500)
+        .json({ error: "Lỗi server khi cập nhật đặt lịch" });
+    }
 
-//     if (result.affectedRows === 0) {
-//       return res
-//         .status(404)
-//         .json({ message: "Không tìm thấy đặt lịch để cập nhật" });
-//     }
+    if (result.affectedRows === 0) {
+      return res
+        .status(404)
+        .json({ message: "Không tìm thấy đặt lịch để cập nhật" });
+    }
 
-//     res.status(200).json({ message: "Cập nhật đặt lịch thành công!" });
-//   });
-// });
+    res.status(200).json({ message: "Cập nhật đặt lịch thành công!" });
+  });
+});
 app.put("/edit-user/:id", (req, res) => {
   const userId = req.params.id;
   const { username, email, password } = req.body;
